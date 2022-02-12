@@ -45,7 +45,7 @@ func New() (*Handler, error) {
 			}
 		}()
 
-		var hwnds = winapi.EnumChildWindows(uintptr(handler.hwnd))
+		var hwnds = winapi.EnumChildWindows(handler.hwnd)
 		hwnds = winapi.EnumChildWindows(hwnds[0])
 		hwnds = winapi.EnumChildWindows(hwnds[1])
 		hwnds = winapi.EnumChildWindows(hwnds[0])
@@ -66,9 +66,10 @@ func New() (*Handler, error) {
 func (h Handler) getHandler(windowName string) (win.HWND, error) {
 	var getHWND win.HWND
 	var found bool
+
 	var enumWndProc = func(hwnd win.HWND, lParam *uintptr) uintptr {
 		var name = make([]uint16, 1000)
-		ok := winapi.GetWindowText(uintptr(hwnd), uintptr(unsafe.Pointer(&name[0])), 1000)
+		ok := winapi.GetWindowText(hwnd, uintptr(unsafe.Pointer(&name[0])), 1000)
 		if ok == 0 {
 			return uintptr(1)
 		}
@@ -82,7 +83,7 @@ func (h Handler) getHandler(windowName string) (win.HWND, error) {
 		return uintptr(1)
 	}
 
-	winapi.EnumDesktopWindows(h.NULL, syscall.NewCallback(enumWndProc), uintptr(0))
+	winapi.EnumDesktopWindows(win.HANDLE(h.NULL), syscall.NewCallback(enumWndProc), h.NULL)
 	if !found {
 		return win.HWND(h.NULL), errors.New("NotFound")
 	}

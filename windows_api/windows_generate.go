@@ -72,7 +72,7 @@ func CreatePen(iStyle int, cWidth int, color uint32) (hpen uintptr) {
 	return
 }
 
-func CreateRectRgnIndirect(rect uintptr) (rgn uintptr) {
+func createRectRgnIndirect(rect uintptr) (rgn uintptr) {
 	r0, _, _ := syscall.Syscall(procCreateRectRgnIndirect.Addr(), 1, uintptr(rect), 0, 0)
 	rgn = uintptr(r0)
 	return
@@ -90,7 +90,7 @@ func PolyDraw(hdc uintptr, apt uintptr, aj uintptr, cpt int) (ok bool) {
 	return
 }
 
-func ClipCursor(rect uintptr) (ok int, err error) {
+func clipCursor(rect uintptr) (ok int, err error) {
 	r0, _, e1 := syscall.Syscall(procClipCursor.Addr(), 1, uintptr(rect), 0, 0)
 	ok = int(r0)
 	if ok == 0 {
@@ -99,37 +99,37 @@ func ClipCursor(rect uintptr) (ok int, err error) {
 	return
 }
 
-func EnumDesktopWindows(hDesktop uintptr, lpEnumFunc uintptr, lParam uintptr) (ok bool) {
+func enumDesktopWindows(hDesktop uintptr, lpEnumFunc uintptr, lParam uintptr) (ok bool) {
 	r0, _, _ := syscall.Syscall(procEnumDesktopWindows.Addr(), 3, uintptr(hDesktop), uintptr(lpEnumFunc), uintptr(lParam))
 	ok = r0 != 0
 	return
 }
 
-func FillRect(hdc uintptr, rect uintptr, hbr uintptr) (ok bool) {
+func fillRect(hdc uintptr, rect uintptr, hbr uintptr) (ok bool) {
 	r0, _, _ := syscall.Syscall(procFillRect.Addr(), 3, uintptr(hdc), uintptr(rect), uintptr(hbr))
 	ok = r0 != 0
 	return
 }
 
-func FindWindowEx(hwndParent uintptr, hwndChildAfter uintptr, lpszClass *uint16, lpszWindow *uint16) (hwnd uintptr) {
+func findWindowEx(hwndParent uintptr, hwndChildAfter uintptr, lpszClass *uint16, lpszWindow *uint16) (hwnd uintptr) {
 	r0, _, _ := syscall.Syscall6(procFindWindowExW.Addr(), 4, uintptr(hwndParent), uintptr(hwndChildAfter), uintptr(unsafe.Pointer(lpszClass)), uintptr(unsafe.Pointer(lpszWindow)), 0, 0)
 	hwnd = uintptr(r0)
 	return
 }
 
-func GetClassName(hwnd uintptr, lpClassName uintptr, nMax uintptr) (length int) {
+func getClassName(hwnd uintptr, lpClassName uintptr, nMax int) (length int) {
 	r0, _, _ := syscall.Syscall(procGetClassNameW.Addr(), 3, uintptr(hwnd), uintptr(lpClassName), uintptr(nMax))
 	length = int(r0)
 	return
 }
 
-func GetWindowText(hwnd uintptr, lpString uintptr, nMax uintptr) (length int) {
+func getWindowText(hwnd uintptr, lpString uintptr, nMax int) (length int) {
 	r0, _, _ := syscall.Syscall(procGetWindowTextW.Addr(), 3, uintptr(hwnd), uintptr(lpString), uintptr(nMax))
 	length = int(r0)
 	return
 }
 
-func InvalidateRect(hwnd uintptr, rect uintptr, bErase bool) (ok bool) {
+func invalidateRect(hwnd uintptr, rect uintptr, bErase bool) (ok bool) {
 	var _p0 uint32
 	if bErase {
 		_p0 = 1
@@ -139,13 +139,13 @@ func InvalidateRect(hwnd uintptr, rect uintptr, bErase bool) (ok bool) {
 	return
 }
 
-func SetLayeredWindowAttributes(hwnd uintptr, color uint32, bAlpha byte, dwFlags uint32) (ok bool) {
+func setLayeredWindowAttributes(hwnd uintptr, color uint32, bAlpha byte, dwFlags uint32) (ok bool) {
 	r0, _, _ := syscall.Syscall6(procSetLayeredWindowAttributes.Addr(), 4, uintptr(hwnd), uintptr(color), uintptr(bAlpha), uintptr(dwFlags), 0, 0)
 	ok = r0 != 0
 	return
 }
 
-func SetWindowRgn(hwnd uintptr, hRgn uintptr, bRedraw bool) (ok bool) {
+func setWindowRgn(hwnd uintptr, hRgn uintptr, bRedraw bool) (ok bool) {
 	var _p0 uint32
 	if bRedraw {
 		_p0 = 1
@@ -155,13 +155,13 @@ func SetWindowRgn(hwnd uintptr, hRgn uintptr, bRedraw bool) (ok bool) {
 	return
 }
 
-func SetWindowText(hwnd uintptr, lpString *uint16) (ok bool) {
+func setWindowText(hwnd uintptr, lpString *uint16) (ok bool) {
 	r0, _, _ := syscall.Syscall(procSetWindowTextW.Addr(), 2, uintptr(hwnd), uintptr(unsafe.Pointer(lpString)), 0)
 	ok = r0 != 0
 	return
 }
 
-func ShowCursor(state bool) (counter int) {
+func showCursor(state bool) (counter int) {
 	var _p0 uint32
 	if state {
 		_p0 = 1
@@ -171,7 +171,7 @@ func ShowCursor(state bool) (counter int) {
 	return
 }
 
-func UpdateLayeredWindow(hwnd uintptr, hdcDst uintptr, pptDst uintptr, psize uintptr, hdcSrc uintptr, pptSrc uintptr, crKey uint32, pblend uintptr, dwFlags uint32) (ok bool) {
+func updateLayeredWindow(hwnd uintptr, hdcDst uintptr, pptDst uintptr, psize uintptr, hdcSrc uintptr, pptSrc uintptr, crKey uint32, pblend uintptr, dwFlags uint32) (ok bool) {
 	r0, _, _ := syscall.Syscall9(procUpdateLayeredWindow.Addr(), 9, uintptr(hwnd), uintptr(hdcDst), uintptr(pptDst), uintptr(psize), uintptr(hdcSrc), uintptr(pptSrc), uintptr(crKey), uintptr(pblend), uintptr(dwFlags))
 	ok = r0 != 0
 	return

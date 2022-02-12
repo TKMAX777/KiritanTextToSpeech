@@ -1,12 +1,14 @@
 package windows_api
 
-import "github.com/lxn/win"
+import (
+	"github.com/lxn/win"
+)
 
-func EnumChildWindows(hwnd uintptr) []uintptr {
-	var res = []uintptr{}
+func EnumChildWindows(hwnd win.HWND) []win.HWND {
+	var res = []win.HWND{}
 
-	var chwnd uintptr
-	for chwnd = FindWindowEx(hwnd, chwnd, nil, nil); chwnd != uintptr(0); chwnd = FindWindowEx(hwnd, chwnd, nil, nil) {
+	var chwnd win.HWND
+	for chwnd = FindWindowEx(hwnd, chwnd, nil, nil); chwnd != win.HWND(uintptr(0)); chwnd = FindWindowEx(hwnd, chwnd, nil, nil) {
 		res = append(res, chwnd)
 	}
 
