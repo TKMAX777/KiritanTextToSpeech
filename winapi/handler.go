@@ -1,4 +1,4 @@
-package windows_api
+package winapi
 
 import (
 	"github.com/lxn/win"

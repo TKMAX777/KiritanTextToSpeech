@@ -1,4 +1,4 @@
-package windows_api
+package winapi
 
 //go:generate go run golang.org/x/sys/windows/mkwinsyscall -output windows_generate.go windows.go
 //sys clipCursor(rect uintptr)(ok int, err error) = user32.ClipCursor

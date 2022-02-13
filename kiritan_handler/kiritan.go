@@ -6,7 +6,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	winapi "github.com/TKMAX777/KiritanWrapper/windows_api"
+	"github.com/TKMAX777/KiritanWrapper/winapi"
 	"github.com/lxn/win"
 )
 
