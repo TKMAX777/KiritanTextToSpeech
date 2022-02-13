@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TKMAX777/KiritanWrapper/kiritan_handler"
+	"github.com/TKMAX777/kiritan_handler"
 )
 
 func main() {
